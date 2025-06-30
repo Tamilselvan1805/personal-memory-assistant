@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}To-Do List{% endblock %}
+
+{% block content %}
+<h2>✅ To-Do List</h2>
+
+<form action="{{ url_for('todo') }}" method="POST">
+  <label for="task">New Task</label><br>
+  <input type="text" name="task" id="task" required><br><br>
+
+  <label for="due_date">Due Date (optional)</label><br>
+  <input type="date" name="due_date" id="due_date"><br><br>
+
+  <button type="submit">Add Task</button>
+</form>
+
+<hr>
+
+<h3>📋 Your Tasks</h3>
+<ul>
+  {% for task in todos %}
+    <li style="margin-bottom: 1rem;">
+      {% if task[2] == 1 %}
+        <del>{{ task[1] }}</del>
+        {% if task[3] %}<small>(Due: {{ task[3] }})</small>{% endif %}
+        <span style="color: green;">✔ Done</span>
+      {% else %}
+        {{ task[1] }}
+        {% if task[3] %}<small>(Due: {{ task[3] }})</small>{% endif %}
+        <a href="{{ url_for('mark_done', todo_id=task[0]) }}">✅ Mark as Done</a>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
+
+{% if todos|length == 0 %}
+  <p>No tasks yet.</p>
+{% endif %}
+{% endblock %}

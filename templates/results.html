@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}AI Query Results{% endblock %}
+
+{% block content %}
+<h2>🤖 Gemini AI Response</h2>
+
+<p><strong>Your Question:</strong><br>{{ question }}</p>
+
+<hr>
+
+<h3>💬 Gemini's Answer:</h3>
+<p>{{ answer | safe }}</p>
+
+<a href="{{ url_for('home') }}">← Back to Home</a>
+{% endblock %}

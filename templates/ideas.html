@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}Project Ideas{% endblock %}
+
+{% block content %}
+<h2>💡 Save a New Project Idea</h2>
+
+<form action="{{ url_for('ideas') }}" method="POST">
+  <label for="title">Idea Title</label><br>
+  <input type="text" name="title" id="title" required><br><br>
+
+  <label for="description">Description</label><br>
+  <textarea name="description" id="description" rows="4" placeholder="Brief description of your project..." required></textarea><br><br>
+
+  <label for="tags">Tags (comma-separated)</label><br>
+  <input type="text" name="tags" id="tags"><br><br>
+
+  <button type="submit">Save Idea</button>
+</form>
+
+<hr>
+
+<h3>📁 Saved Ideas</h3>
+<ul>
+  {% for idea in ideas %}
+    <li style="margin-bottom: 1.2rem;">
+      <strong>{{ idea[1] }}</strong><br>
+      <em>{{ idea[2] }}</em><br>
+      <small><strong>Tags:</strong> {{ idea[3] }}</small>
+    </li>
+  {% endfor %}
+</ul>
+
+{% if ideas|length == 0 %}
+  <p>No ideas saved yet.</p>
+{% endif %}
+{% endblock %}

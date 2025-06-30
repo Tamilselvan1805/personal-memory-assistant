@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Search Memories{% endblock %}
+
+{% block content %}
+<h2>🔍 Search Your Memory Log</h2>
+
+<form action="{{ url_for('search_memory') }}" method="POST">
+  <input type="text" name="query" placeholder="e.g. Raj, AI, conference" required>
+  <button type="submit">Search</button>
+</form>
+
+{% if results %}
+  <hr>
+  <h3>🔎 Search Results:</h3>
+  <ul>
+    {% for memory in results %}
+      <li style="margin-bottom: 1rem;">
+        <strong>{{ memory[2] }}</strong> ({{ memory[1] }})<br>
+        <em>Person:</em> {{ memory[1] }}<br>
+        <em>Details:</em> {{ memory[3] }}<br>
+        <em>Tags:</em> {{ memory[4] }}
+      </li>
+    {% endfor %}
+  </ul>
+{% elif results is defined %}
+  <p style="margin-top: 1rem;">❌ No results found.</p>
+{% endif %}
+{% endblock %}

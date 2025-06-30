@@ -1,0 +1,5 @@
+memoryENV/
+__pycache__/
+.env
+*.pyc
+*.db

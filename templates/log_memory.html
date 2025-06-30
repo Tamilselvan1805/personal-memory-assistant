@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Log Memory{% endblock %}
+
+{% block content %}
+<h2>📝 Log a Memory</h2>
+
+<form action="{{ url_for('log_memory') }}" method="POST">
+  <label for="person">Person's Name</label><br>
+  <input type="text" name="person" id="person" required><br><br>
+
+  <label for="date">Date</label><br>
+  <input type="date" name="date" id="date" value="{{ date | default('', true) }}" required><br><br>
+
+  <label for="event">Event Summary</label><br>
+  <input type="text" name="event" id="event" placeholder="e.g. Met at tech meetup" required><br><br>
+
+  <label for="details">Details</label><br>
+  <textarea name="details" id="details" rows="5" placeholder="e.g. Discussed AI tools, exchanged contacts" required></textarea><br><br>
+
+  <label for="tags">Tags (comma-separated)</label><br>
+  <input type="text" name="tags" id="tags" placeholder="e.g. Raj, AI, meetup"><br><br>
+
+  <button type="submit">Save Memory</button>
+</form>
+{% endblock %}

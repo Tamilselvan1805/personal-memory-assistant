@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}Home - Memory Assistant{% endblock %}
+
+{% block content %}
+<h2>Welcome to Your Personal Memory Assistant 🧠</h2>
+<p>This tool helps you log daily memories, manage to-dos, save future project ideas, and recall any detail using Gemini AI.</p>
+
+<div style="margin-top: 2rem;">
+  <h3>Quick Actions</h3>
+  <ul style="line-height: 2;">
+    <li><a href="{{ url_for('log_memory') }}">📝 Log a Memory</a></li>
+    <li><a href="{{ url_for('search_memory') }}">🔍 Search Memories</a></li>
+    <li><a href="{{ url_for('todo') }}">✅ View To-Do List</a></li>
+    <li><a href="{{ url_for('ideas') }}">💡 View Saved Ideas</a></li>
+  </ul>
+</div>
+
+<div style="margin-top: 2rem;">
+  <h3>Ask AI About Your Memories 🤖</h3>
+  <form action="{{ url_for('ai_query') }}" method="POST">
+    <input type="text" name="question" placeholder="e.g. What did I discuss with Raj?" style="width: 60%;" required>
+    <button type="submit">Ask Gemini</button>
+  </form>
+</div>
+{% endblock %}
