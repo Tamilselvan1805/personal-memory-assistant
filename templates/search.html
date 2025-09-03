@@ -2,27 +2,57 @@
 {% block title %}Search Memories{% endblock %}
 
 {% block content %}
-<h2>🔍 Search Your Memory Log</h2>
+<div class="max-w-2xl mx-auto p-6">
+  <h2 class="text-3xl font-extrabold text-brown text-center mb-6">
+    🔍 Search Your Memory Log
+  </h2>
 
-<form action="{{ url_for('search_memory') }}" method="POST">
-  <input type="text" name="query" placeholder="e.g. Raj, AI, conference" required>
-  <button type="submit">Search</button>
-</form>
+  <!-- Search Form -->
+  <form action="{{ url_for('search_memory') }}" method="POST" class="flex gap-3 mb-6">
+    <input type="text" name="query" required
+      class="flex-grow rounded-lg border border-brown shadow-sm px-4 py-3 text-gray-800
+             focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown"
+      placeholder="e.g. Raj, AI, conference" value="{{ query or '' }}">
+    <button type="submit"
+      class="px-6 py-3 bg-brown text-white font-medium rounded-lg shadow-md
+             hover:bg-amber-700 transition">
+      Search
+    </button>
+  </form>
 
-{% if results %}
-  <hr>
-  <h3>🔎 Search Results:</h3>
-  <ul>
-    {% for memory in results %}
-      <li style="margin-bottom: 1rem;">
-        <strong>{{ memory[2] }}</strong> ({{ memory[1] }})<br>
-        <em>Person:</em> {{ memory[1] }}<br>
-        <em>Details:</em> {{ memory[3] }}<br>
-        <em>Tags:</em> {{ memory[4] }}
-      </li>
-    {% endfor %}
-  </ul>
-{% elif results is defined %}
-  <p style="margin-top: 1rem;">❌ No results found.</p>
-{% endif %}
+  <!-- Results Section -->
+  {% if query is defined and query %}
+    {% if results %}
+      <hr class="my-4">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">🔎 Search Results:</h3>
+      
+      <!-- Unique ID for JS -->
+      <ul id="resultsList" class="space-y-4">
+        {% for memory in results %}
+          <li class="p-4 border border-gray-300 rounded-lg shadow-sm bg-white">
+            <strong class="text-lg text-brown-700">{{ memory[2] }}</strong> <br>
+            <em class="text-gray-600">Person:</em> {{ memory[1] }}<br>
+            <em class="text-gray-600">Details:</em> {{ memory[3] }}<br>
+            <em class="text-gray-600">Tags:</em> {{ memory[4] }}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <!-- Clear Button (only when results exist) -->
+      <button type="button" id="clearBtn"
+        class="mt-4 px-6 py-3 bg-gray-300 text-gray-800 font-medium rounded-lg shadow-md
+               hover:bg-gray-400 transition">
+        Clear
+      </button>
+    {% else %}
+      <!-- Show only if search was performed but no results -->
+      <p id="noResultsMsg" class="text-red-600 font-medium mt-4 flex items-center gap-2">
+        ❌ No results found.
+      </p>
+    {% endif %}
+  {% endif %}
+</div>
+
+<!-- External JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}

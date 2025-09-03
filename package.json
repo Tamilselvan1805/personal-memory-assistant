@@ -1,0 +1,25 @@
+{
+  "name": "personal-memory-assistant",
+  "version": "1.0.0",
+  "description": "A simple AI-powered memory assistant that allows users to log memories and ask questions about past events using natural language queries. Built with Flask, SQLite, and integrated with Gemini AI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tamilselvan1805/personal-memory-assistant.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tamilselvan1805/personal-memory-assistant/issues"
+  },
+  "homepage": "https://github.com/Tamilselvan1805/personal-memory-assistant#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.12"
+  }
+}

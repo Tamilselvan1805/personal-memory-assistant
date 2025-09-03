@@ -2,38 +2,88 @@
 {% block title %}To-Do List{% endblock %}
 
 {% block content %}
-<h2>✅ To-Do List</h2>
+<div class="max-w-2xl mx-auto p-6">
+  <h2 class="text-3xl font-extrabold text-brown text-center mb-6">✅ To-Do List</h2>
 
-<form action="{{ url_for('todo') }}" method="POST">
-  <label for="task">New Task</label><br>
-  <input type="text" name="task" id="task" required><br><br>
+  <!-- Add Task Form -->
+  <form action="{{ url_for('todo') }}" method="POST" class="space-y-4 p-4 rounded-xl ">
+    <div>
+      <label for="task" class="block font-medium text-gray-700">New Task</label>
+      <input type="text" name="task" id="task" required
+        class="w-full border rounded-lg px-3 py-2  border-brown focus:ring-2 focus:ring-brown focus:border-brown outline-none">
+    </div>
 
-  <label for="due_date">Due Date (optional)</label><br>
-  <input type="date" name="due_date" id="due_date"><br><br>
+    <div>
+      <label for="due_date" class="block font-medium text-gray-700">Due Date (optional)</label>
+      <input type="date" name="due_date" id="due_date"
+        class="w-full border border-brown rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513] outline-none">
+    </div>
 
-  <button type="submit">Add Task</button>
-</form>
+    <div>
+      <label for="priority" class="block font-medium text-gray-700">Priority</label>
+      <select name="priority" id="priority"
+        class="w-full border border-brown rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#8B4513] focus:border-[#8B4513] outline-none">
+        <option value="Low" selected>🟢 Low</option>
+        <option value="Medium">🟡 Medium</option>
+        <option value="High">🔴 High</option>
+      </select>
+    </div>
 
-<hr>
+    <button type="submit"
+      class="w-full bg-brown text-white font-semibold py-2 rounded-lg shadow hover:bg-amber-700 transition">
+      ➕ Add Task
+    </button>
+  </form>
 
-<h3>📋 Your Tasks</h3>
-<ul>
-  {% for task in todos %}
-    <li style="margin-bottom: 1rem;">
-      {% if task[2] == 1 %}
-        <del>{{ task[1] }}</del>
-        {% if task[3] %}<small>(Due: {{ task[3] }})</small>{% endif %}
-        <span style="color: green;">✔ Done</span>
-      {% else %}
-        {{ task[1] }}
-        {% if task[3] %}<small>(Due: {{ task[3] }})</small>{% endif %}
-        <a href="{{ url_for('mark_done', todo_id=task[0]) }}">✅ Mark as Done</a>
-      {% endif %}
-    </li>
-  {% endfor %}
-</ul>
+  <hr class="my-6">
 
-{% if todos|length == 0 %}
-  <p>No tasks yet.</p>
-{% endif %}
+  <!-- Task List -->
+  <h3 class="text-xl font-bold text-brown mb-4">📋 Your Tasks</h3>
+  <ul class="space-y-3">
+    {% for task in todos %}
+      <li class="p-4 border rounded-lg bg-white shadow-sm flex justify-between items-center">
+        <div>
+          {% if task[2] == 1 %}
+            <del class="text-gray-500">{{ task[1] }}</del>
+            {% if task[3] %}<small class="text-gray-500">(Due: {{ task[3] }})</small>{% endif %}
+            <span class="ml-2 text-green-600 font-medium">✔ Done</span>
+          {% else %}
+            <span class="font-medium">{{ task[1] }}</span>
+            {% if task[3] %}
+              <small class="text-gray-500">(Due: {{ task[3] }})</small>
+              {% if task[3] < current_date|string %}
+                <span class="ml-2 text-red-600 font-semibold">⚠ Overdue</span>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+
+          <!-- Priority Badge -->
+          {% if task[4] == "High" %}
+            <span class="ml-2 px-2 py-1 text-xs rounded-full bg-red-100 text-red-700 font-semibold">🔴 High</span>
+          {% elif task[4] == "Medium" %}
+            <span class="ml-2 px-2 py-1 text-xs rounded-full bg-yellow-100 text-yellow-700 font-semibold">🟡 Medium</span>
+          {% else %}
+            <span class="ml-2 px-2 py-1 text-xs rounded-full bg-green-100 text-green-700 font-semibold">🟢 Low</span>
+          {% endif %}
+        </div>
+
+        <div class="flex space-x-3">
+          {% if task[2] == 0 %}
+            <a href="{{ url_for('mark_done', todo_id=task[0]) }}"
+               class="text-blue-600 hover:underline">✅ Done</a>
+          {% endif %}
+
+          <!-- Delete Button -->
+          <form action="{{ url_for('delete_task', todo_id=task[0]) }}" method="POST" onsubmit="return confirm('Delete this task?');">
+            <button type="submit" class="text-red-600 hover:underline">🗑 Delete</button>
+          </form>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if todos|length == 0 %}
+    <p class="text-gray-500 mt-4">No tasks yet.</p>
+  {% endif %}
+</div>
 {% endblock %}

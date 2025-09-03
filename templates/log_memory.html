@@ -2,24 +2,77 @@
 {% block title %}Log Memory{% endblock %}
 
 {% block content %}
-<h2>📝 Log a Memory</h2>
+<div class="max-w-2xl mx-auto">
+  <div class="p-8">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-brown flex items-center justify-center gap-2">
+        📝 Log a Memory
+      </h2>
+      <p class="text-gray-600 mt-2">
+        Capture the moments that matter, with context and clarity.
+      </p>
+    </div>
 
-<form action="{{ url_for('log_memory') }}" method="POST">
-  <label for="person">Person's Name</label><br>
-  <input type="text" name="person" id="person" required><br><br>
+    <form id="log-memory-form" action="{{ url_for('log_memory') }}" method="POST" class="space-y-6">
+      <!-- Person -->
+      <div>
+        <label for="person" class="block text-sm font-semibold text-gray-700">Person's Name</label>
+        <input id="person" name="person" type="text" required
+          class="mt-2 block w-full rounded-lg border border-brown shadow-sm px-4 py-3 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown"
+          placeholder="Person Name" />
+      </div>
 
-  <label for="date">Date</label><br>
-  <input type="date" name="date" id="date" value="{{ date | default('', true) }}" required><br><br>
+      <!-- Date -->
+      <div>
+        <label for="date" class="block text-sm font-semibold text-gray-700">Date</label>
+        <input id="date" name="date" type="date" required
+          value="{{ date | default('', true) }}"
+          class="mt-2 block w-full rounded-lg border border-brown shadow-sm px-4 py-3 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown" />
+      </div>
 
-  <label for="event">Event Summary</label><br>
-  <input type="text" name="event" id="event" placeholder="e.g. Met at tech meetup" required><br><br>
+      <!-- Event -->
+      <div>
+        <label for="event" class="block text-sm font-semibold text-gray-700">Event Summary</label>
+        <input id="event" name="event" type="text" required
+          class="mt-2 block w-full rounded-lg border border-brown shadow-sm px-4 py-3 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown"
+          placeholder="e.g. Met at tech meetup" />
+      </div>
 
-  <label for="details">Details</label><br>
-  <textarea name="details" id="details" rows="5" placeholder="e.g. Discussed AI tools, exchanged contacts" required></textarea><br><br>
+      <!-- Details -->
+      <div>
+        <label for="details" class="block text-sm font-semibold text-gray-700">Details</label>
+        <textarea id="details" name="details" rows="6" required
+          class="mt-2 block w-full rounded-lg border border-brown shadow-sm px-4 py-3 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown resize-y"
+          placeholder="e.g. Discussed AI tools, exchanged contacts"></textarea>
+        <p class="text-xs text-gray-500 mt-1">Characters: <span id="details-count">0</span></p>
+      </div>
 
-  <label for="tags">Tags (comma-separated)</label><br>
-  <input type="text" name="tags" id="tags" placeholder="e.g. Raj, AI, meetup"><br><br>
+      <!-- Tags -->
+      <div>
+        <label for="tags" class="block text-sm font-semibold text-gray-700">Tags (comma-separated)</label>
+        <input id="tags" name="tags" type="text"
+          class="mt-2 block w-full rounded-lg border border-brown shadow-sm px-4 py-3 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown"
+          placeholder="e.g. Raj, AI, meetup" />
+      </div>
 
-  <button type="submit">Save Memory</button>
-</form>
+      <!-- Submit -->
+      <div class="flex justify-end">
+        <button type="submit"
+          class="px-6 py-3 bg-brown text-white font-medium rounded-lg shadow-md
+                 hover:bg-amber-700 hover:shadow-lg transition transform hover:-translate-y-0.5">
+          💾 Save Memory
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
